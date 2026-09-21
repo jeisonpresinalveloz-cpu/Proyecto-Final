@@ -1,28 +1,32 @@
 const mongoose = require('mongoose');
 
 const appointmentSchema = new mongoose.Schema({
-    patient: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+    patient: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true 
     },
-    doctor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+    doctor: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true 
     },
-    date: {
-        type: String, // Guardaremos la fecha en formato YYYY-MM-DD
-        required: true
+    date: { 
+        type: String, 
+        required: true // Formato esperado: "YYYY-MM-DD"
     },
-    time: {
-        type: String, // Ejemplo: "14:00"
-        required: true
+    startTime: { 
+        type: String, 
+        required: true // Formato esperado: "HH:MM"
     },
-    status: {
-        type: String,
-        enum: ['pendiente', 'confirmada', 'cancelada'],
-        default: 'confirmada'
+    status: { 
+        type: String, 
+        enum: ['Pendiente', 'Confirmada', 'Cancelada'], 
+        default: 'Pendiente' 
+    },
+    reason: { 
+        type: String, 
+        required: true 
     }
 }, {
     timestamps: true

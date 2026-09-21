@@ -28,6 +28,7 @@ app.use(limiter); // 3. Activar el limitador globalmente para todas las rutas
 app.use('/api/auth', require('./src/routes/authRoutes'));
 app.use('/api/schedules', require('./src/routes/scheduleRoutes'));
 app.use('/api/users', require('./src/routes/userRoutes'));
+app.use('/api/appointments', require('./src/routes/appointmentRoutes'));
 
 app.get('/', (req, res) => {
     res.send('API del Sistema de Citas Médicas funcionando');

@@ -4,9 +4,7 @@ const User = require('../models/User');
 const createAppointment = async (req, res) => {
     try {
         const { doctorId, date, startTime, reason } = req.body;
-        
-        // ¡Magia de seguridad! El ID del paciente lo tomamos del token, no del body.
-        // Así evitamos que un usuario malicioso agende citas a nombre de otro.
+
         const patientId = req.user.id; 
 
         // 1. Validar que el médico exista
@@ -42,4 +40,18 @@ const createAppointment = async (req, res) => {
     }
 };
 
-module.exports = { createAppointment };
+// Función para que el paciente vea su historial de citas
+const getMyAppointments = async (req, res) => {
+    try {
+        // Buscar todas las citas donde el paciente sea el usuario autenticado (extraído del token)
+        // Usamos .populate() para traer los datos del doctor (nombre y especialidad) en lugar de solo su ID
+        const appointments = await Appointment.find({ patient: req.user.id })
+            .populate('doctor', 'name specialty');
+
+        res.status(200).json(appointments);
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al obtener el historial de citas', error: error.message });
+    }
+};
+
+module.exports = { createAppointment, getMyAppointments };
